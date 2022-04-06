@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import Watch from './snippets/속성/Watch.vue';
+import Watch from './watchers/Watch.vue';
 
 export default {
   name: 'App',
