@@ -7,5 +7,5 @@
 
 <script setup>
 // import Watch from './watchers/Watch.vue';
-// import Inputs from './ui/Inputs.vue';
+// import Inputs from './ui/input/Inputs.vue';
 </script>
