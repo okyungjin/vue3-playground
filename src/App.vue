@@ -1,15 +1,11 @@
 <template>
   <h1>Vue3 Code Snippets</h1>
-  <Watch></Watch>
+  <p>Uncomment the component you want to display.</p>
+<!--  <Watch></Watch>-->
+<!--  <Inputs></Inputs>-->
 </template>
 
-<script>
-import Watch from './watchers/Watch.vue';
-
-export default {
-  name: 'App',
-  components: {
-    Watch
-  }
-}
+<script setup>
+// import Watch from './watchers/Watch.vue';
+// import Inputs from './ui/Inputs.vue';
 </script>
