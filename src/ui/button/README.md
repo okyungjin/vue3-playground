@@ -1,7 +1,11 @@
+
 # CustomButton
 
-  - [v-bind="$attrs"](#v-bindattrs)
-  - [Proxy 변수](#proxy-변수)
+- [소개](#소개)
+- [DEV Notes](#dev-notes)
+    - [v-bind="$attrs"](#v-bindattrs)
+    - [Proxy 변수](#proxy-변수)
+
 
 ## 소개
 `slot`을 사용하여 커스텀이 가능하도록 만든 button 컴포넌트이다.
