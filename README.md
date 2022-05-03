@@ -1,3 +1,13 @@
+# Table of Contents
+- [Table of Contents](#table-of-contents)
+- [vue3-snippets](#vue3-snippets)
+- [DEV Notes](#dev-notes)
+  - [watch 속성에서 arrow function 사용 시](#watch-속성에서-arrow-function-사용-시)
+- [Vue 3 공식문서 읽기](#vue-3-공식문서-읽기)
+  - [Components Basics](#components-basics)
+    - [Defining a Component](#defining-a-component)
+    - [Using a Comnonent](#using-a-comnonent)
+    - [Passing Props](#passing-props)
 # vue3-snippets
 
 # DEV Notes
@@ -51,6 +61,7 @@ const count = ref(0)
 <br>
 
 **Plain JavaScript**
+
 When not using a build step, a Vue component can be defined as a plain JavaScript object containing Vue-specific options:
 
 ```js
@@ -103,3 +114,46 @@ In such cases, you will need to use `kebab-case` and **explicit closing tag**s f
 <button-counter></button-counter>
 ```
 
+### [Passing Props](https://vuejs.org/guide/essentials/component-basics.html#passing-props)
+
+**using `<script setup>`**
+
+```vue
+<!-- BlogPost.vue -->
+<script setup>
+defineProps(['title'])
+</script>
+
+<template>
+  <h4>{{ title }}</h4>
+</template>
+```
+
+`defineProps` is a compile-time macro that is only **available inside `<script setup>`** and **does not need to be explicitly imported**.
+
+> defineProps
+> - `<script setup>` 내부에서만 유효
+> - import가 필요 없음
+
+<br>
+
+Declared props are automatically exposed to the template. **`defineProps` also returns an object that contains all the props passed to the component,** so that we can access them in JavaScript if needed:
+
+```js
+const props = defineProps(['title'])
+console.log(props.title)
+```
+
+> `defineProps` 는 컴포넌트에 전달된 모든 props를 포함하는 object를 리턴한다.
+
+<br>
+
+**not using `<script setup>`**
+```js
+export default {
+  props: ['title'],
+  setup(props) {
+    console.log(props.title)
+  }
+}
+```
