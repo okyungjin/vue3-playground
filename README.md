@@ -71,3 +71,35 @@ export default {
 
 You can also use an ID selector pointing to an element (usually native `<template>` elements) - Vue will use its content as the template source.
 
+### [Using a Comnonent](https://vuejs.org/guide/essentials/component-basics.html#using-a-component)
+
+```vue
+<h1>Here are many child components!</h1>
+<ButtonCounter />
+<ButtonCounter />
+<ButtonCounter />
+```
+
+In SFCs, it's recommended to use `PascalCase` tag names for child components to differentiate from native HTML elements. 
+
+Although native HTML tag names are case-insensitive, **Vue SFC is** a compiled format so we are able to use **case-sensitive** tag names in it. 
+
+We are also able to use `/>` to close a tag.
+
+> - HTML 태그와 구분을 위해 SFC에서는 PascalCase tag name을 사용하는 것을 권장한다.
+> - HTML 태그는 case-sensitive 하지 않지만, Vue SFC는 case-sensitive하다.
+
+<br>
+
+
+If you are authoring your templates directly in a DOM (e.g. as the content of a native `<template>` element), the template will be subject to the browser's native HTML parsing behavior.
+
+In such cases, you will need to use `kebab-case` and **explicit closing tag**s for components:
+
+```vue
+<!-- if this template is written in the DOM -->
+<button-counter></button-counter>
+<button-counter></button-counter>
+<button-counter></button-counter>
+```
+
