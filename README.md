@@ -16,6 +16,9 @@
     - [not using `<script setup>`](#not-using-script-setup-1)
   - [[Components Basics] Dynamic Components](#components-basics-dynamic-components)
   - [[Components Basics] DOM Template Parsing Caveats](#components-basics-dom-template-parsing-caveats)
+  - [[Components In-Depth] Component Registration](#components-in-depth-component-registration)
+    - [Global Registration](#global-registration)
+    - [Local Registration](#local-registration)
 # vue3-snippets
 
 # DEV Notes
@@ -303,3 +306,111 @@ When switching between multiple components with `<component :is="...">`, **a com
 - [ ] https://vuejs.org/guide/essentials/component-basics.html#dom-template-parsing-caveats
 
 
+## [Components In-Depth] Component Registration
+
+A Vue component needs to be "registered" so that Vue knows where to locate its implementation when it is encountered in a template
+
+> Vue 컴포넌트가 template에서 발견될 때, Vue가 컴포넌트의 구현 위치를 알기 위해서는 "등록" 과정이 필요하다.
+
+### Global Registration
+
+We can make components available globally in the current Vue application using the `app.component()` method:
+
+```js
+import { createApp } from 'vue'
+
+const app = createApp({})
+
+app.component(
+  // the registered name
+  'MyComponent',
+  // the implementation
+  {
+    /* ... */
+  }
+)
+```
+
+If using SFCs, you will be registering the imported `.vue` files:
+
+```js
+import MyComponent from './App.vue'
+
+app.component('MyComponent', MyComponent)
+```
+The `app.component()` method can be chained:
+```js
+app
+  .component('ComponentA', ComponentA)
+  .component('ComponentB', ComponentB)
+  .component('ComponentC', ComponentC)
+```
+
+
+Globally registered components can be used in the template of any component within this application:
+```vue
+<!-- this will work in any component inside the app -->
+<ComponentA/>
+<ComponentB/>
+<ComponentC/>
+```
+
+This even applies to all subcomponents, meaning all three of these components will also be available inside each other.
+
+> 이는 모든 하위 구성 요소에도 적용되므로 이 세 가지 구성 요소 모두 서로 내부에서 사용할 수 있습니다.
+
+
+### Local Registration
+
+While convenient, global registration has a few drawbacks:
+> 편리하지만 global registratio에는 몇 가지 단점이 있습니다.
+
+1. **Global registration prevents build systems from removing unused components** (a.k.a "tree-shaking"). If you globally register a component but end up not using it anywhere in your app, it will still be included in the final bundle.
+
+> Global registration은 build system이 사용하지 않는 컴포넌트를 삭제하는 tree-shaking을 방지합니다.
+> 컴포넌트를 global하게 등록하고 app에서 사용하지 않은 경우에도 최종 번들에 포함됩니다.
+
+
+2. Global registration makes dependency relationships less explicit in large applications. It makes it difficult to locate a child component's implementation from a parent component using it. This can affect long-term maintainability similar to using too many global variables.
+
+> Global registration 큰 어플리케이션에서 종속 관계를 덜 명확하게 합니다.
+> Parent component에서 사용하고 있는 child component의 구현을 찾기 어려워집니다. 
+> 이는 너무 많은 전역 변수를 사용하는 것과 유사하게, 장기적인 유지관리 가능성에 영향을 미칠 수 있습니다.
+
+
+Local registration scopes the availability of the registered components to the current component only. It makes the dependency relationship more explicit, and is more tree-shaking friendly.
+
+<br>
+
+When using SFC with `<script setup>`, imported components can be locally used without registration:
+
+```vue
+<script setup>
+import ComponentA from './ComponentA.vue'
+</script>
+
+<template>
+  <ComponentA />
+</template>
+```
+
+<br>
+
+In non-`<script setup>`, you will need to use the components option:
+
+```vue
+import ComponentA from './ComponentA.js'
+
+export default {
+  components: {
+    ComponentA
+  },
+  setup() {
+    // ...
+  }
+}
+```
+
+<br>
+
+Note that **locally registered components are not also available in descendent components.** In this case, `ComponentA` will be made available to the current component only, not any of its child or descendent components.
