@@ -8,6 +8,7 @@
     - [Defining a Component](#defining-a-component)
     - [Using a Comnonent](#using-a-comnonent)
     - [Passing Props](#passing-props)
+    - [Listening to Events](#listening-to-events)
 # vue3-snippets
 
 # DEV Notes
@@ -154,6 +155,60 @@ export default {
   props: ['title'],
   setup(props) {
     console.log(props.title)
+  }
+}
+```
+
+### Listening to Events
+
+**using `<script setup>`**
+
+```vue
+<BlogPost
+  ...
+  @enlarge-text="postFontSize += 0.1"
+ />
+```
+
+```vue
+<!-- BlogPost.vue, omitting <script> -->
+<template>
+  <div class="blog-post">
+    <h4>{{ title }}</h4>
+    <button @click="$emit('enlarge-text')">Enlarge text</button>
+  </div>
+</template>
+
+<script setup>
+defineProps(['title'])
+defineEmits(['enlarge-text'])
+</script>
+```
+
+Similar to defineProps, defineEmits is also only usable in `<script setup>` and doesn't need to be imported. 
+
+**It returns an `emit` function that can be used to emit events in JavaScript code:**
+
+```js
+const emit = defineEmits(['enlarge-text'])
+
+emit('enlarge-text')
+```
+
+<br>
+
+**not using `<script setup>`**
+
+If you are not using `<script setup>`, you can declare emitted events using the `emits` option. 
+
+You can access the `emit` function as a property of the **setup context (passed to setup() as the second argument)**:
+
+
+```js
+export default {
+  emits: ['enlarge-text'],
+  setup(props, ctx) {
+    ctx.emit('enlarge-text')
   }
 }
 ```
