@@ -1,5 +1,5 @@
 <template>
-  <button v-bind="$attrs" :type="type" :class="classes" ref="button">
+  <button v-bind="$attrs" :type="type" :class="classes" ref="button" @click="onClick">
     <slot></slot>
   </button>
 </template>
@@ -24,6 +24,7 @@ export default {
     },
     lg: Boolean,
     pill: Boolean,
+    active: Boolean,
   },
   setup(props, context) {
     const classes = [];
@@ -34,6 +35,8 @@ export default {
     else classes.push('md');
 
     if (props.pill) classes.push('pill');
+
+    if (props.active === false) classes.push('deactive');
 
     onMounted(() => {
       Object
@@ -74,5 +77,9 @@ button {
 
 .pill {
   border-radius: 16px;
+}
+
+.deactive {
+  filter: brightness(50%);
 }
 </style>
