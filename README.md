@@ -4,11 +4,16 @@
 - [DEV Notes](#dev-notes)
   - [watch 속성에서 arrow function 사용 시](#watch-속성에서-arrow-function-사용-시)
 - [Vue 3 공식문서 읽기](#vue-3-공식문서-읽기)
-  - [Components Basics](#components-basics)
-    - [Defining a Component](#defining-a-component)
-    - [Using a Comnonent](#using-a-comnonent)
-    - [Passing Props](#passing-props)
-    - [Listening to Events](#listening-to-events)
+  - [[Components Basics] Defining a Component](#components-basics-defining-a-component)
+    - [SFC (Single File Component)](#sfc-single-file-component)
+    - [Plain JavaScript](#plain-javascript)
+  - [[Components Basics] Using a Comnonent](#components-basics-using-a-comnonent)
+  - [[Components Basics] Passing Props](#components-basics-passing-props)
+    - [using `<script setup>`](#using-script-setup)
+    - [not using `<script setup>`](#not-using-script-setup)
+  - [[Components Basics] Listening to Events](#components-basics-listening-to-events)
+    - [using `<script setup>`](#using-script-setup-1)
+    - [not using `<script setup>`](#not-using-script-setup-1)
 # vue3-snippets
 
 # DEV Notes
@@ -42,11 +47,9 @@ export default {
 
 
 # Vue 3 공식문서 읽기
+## [Components Basics] [Defining a Component](https://vuejs.org/guide/essentials/component-basics.html#defining-a-component)
 
-## Components Basics
-### [Defining a Component](https://vuejs.org/guide/essentials/component-basics.html#defining-a-component)
-
-**SFC (Single File Component)**
+### SFC (Single File Component)
 ```vue
 <script setup>
 import { ref } from 'vue'
@@ -61,7 +64,7 @@ const count = ref(0)
 
 <br>
 
-**Plain JavaScript**
+### Plain JavaScript
 
 When not using a build step, a Vue component can be defined as a plain JavaScript object containing Vue-specific options:
 
@@ -83,7 +86,7 @@ export default {
 
 You can also use an ID selector pointing to an element (usually native `<template>` elements) - Vue will use its content as the template source.
 
-### [Using a Comnonent](https://vuejs.org/guide/essentials/component-basics.html#using-a-component)
+## [Components Basics] [Using a Comnonent](https://vuejs.org/guide/essentials/component-basics.html#using-a-component)
 
 ```vue
 <h1>Here are many child components!</h1>
@@ -115,9 +118,9 @@ In such cases, you will need to use `kebab-case` and **explicit closing tag**s f
 <button-counter></button-counter>
 ```
 
-### [Passing Props](https://vuejs.org/guide/essentials/component-basics.html#passing-props)
+## [Components Basics] [Passing Props](https://vuejs.org/guide/essentials/component-basics.html#passing-props)
 
-**using `<script setup>`**
+### using `<script setup>`
 
 ```vue
 <!-- BlogPost.vue -->
@@ -149,7 +152,7 @@ console.log(props.title)
 
 <br>
 
-**not using `<script setup>`**
+### not using `<script setup>`
 ```js
 export default {
   props: ['title'],
@@ -159,9 +162,9 @@ export default {
 }
 ```
 
-### Listening to Events
+## [Components Basics] Listening to Events
 
-**using `<script setup>`**
+### using `<script setup>`
 
 ```vue
 <BlogPost
@@ -197,7 +200,7 @@ emit('enlarge-text')
 
 <br>
 
-**not using `<script setup>`**
+### not using `<script setup>`
 
 If you are not using `<script setup>`, you can declare emitted events using the `emits` option. 
 
