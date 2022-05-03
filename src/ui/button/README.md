@@ -6,9 +6,6 @@
   - [DEV Notes](#dev-notes)
     - [v-bind="$attrs"](#v-bindattrs)
     - [Proxy 변수](#proxy-변수)
-- [Vue 3 공식문서 읽기](#vue-3-공식문서-읽기)
-  - [Components Basics](#components-basics)
-    - [Defining a Component](#defining-a-component)
 
 
 ## 소개
@@ -52,45 +49,3 @@ export default {
 }
 </script>
 ```
-
-# Vue 3 공식문서 읽기
-
-## Components Basics
-### [Defining a Component](https://vuejs.org/guide/essentials/component-basics.html#defining-a-component)
-
-**SFC (Single File Component)**
-```vue
-<script setup>
-import { ref } from 'vue'
-
-const count = ref(0)
-</script>
-
-<template>
-  <button @click="count++">You clicked me {{ count }} times.</button>
-</template>
-```
-
-<br>
-
-**Plain JavaScript**
-When not using a build step, a Vue component can be defined as a plain JavaScript object containing Vue-specific options:
-
-```js
-import { ref } from 'vue'
-
-export default {
-  setup() {
-    const count = ref(0)
-    return { count }
-  },
-  template: `
-    <button @click="count++">
-      You clicked me {{ count }} times.
-    </button>`
-  // or `template: '#my-template-element'`
-}
-```
-
-You can also use an ID selector pointing to an element (usually native `<template>` elements) - Vue will use its content as the template source.
-
